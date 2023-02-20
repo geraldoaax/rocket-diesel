@@ -17,6 +17,24 @@ fn index() -> &'static str {
     "Hello, world!"
 }
 
+#[get("/")]
+fn get_all_blog_posts() -> Json<Vec<BlogPost>> {
+    Json(vec![
+        BlogPost {
+            id: 0,
+            title: "Harry Potter".to_string(),
+            body: "There once lived a boy".to_string(),
+            published: true,
+        },
+        BlogPost {
+            id: 1,
+            title: "Fantastic Beast".to_string(),
+            body: "There once lived a beast".to_string(),
+            published: true,
+        },
+    ])
+}
+
 #[get("/<id>")]
 fn get_blog_post(id: i32) -> Json<BlogPost> {
     Json(BlogPost {
@@ -40,8 +58,8 @@ fn get_random_blog_post() -> Json<BlogPost> {
 #[launch]
 fn rocket() -> _ {
     let rocket = rocket::build();
-    rocket
-        .mount("/", routes![index])
-        .mount("/blog-posts", routes![get_random_blog_post, get_blog_post])
-    // .mount("/get_post", routes![get_blog_post])
+    rocket.mount("/", routes![index]).mount(
+        "/blog-posts",
+        routes![get_random_blog_post, get_all_blog_posts, get_blog_post],
+    )
 }
