@@ -21,7 +21,7 @@ struct BlogPost {
 
 #[get("/")]
 fn index() -> &'static str {
-    "Hello, world!"
+    "Hello, rocket-diesel!"
 }
 
 #[get("/")]
