@@ -3,3 +3,6 @@
 [default]
 name = "Geraldo"
 age = 41
+
+[default.databases.my_db]
+url = "postgres://postgres:example@localhost:5432/postgres"
