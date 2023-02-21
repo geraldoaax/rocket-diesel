@@ -55,11 +55,21 @@ fn get_random_blog_post() -> Json<BlogPost> {
     })
 }
 
+#[post("/", data = "<blog_post>")]
+fn create_blog_post(blog_post: Json<BlogPost>) -> Json<BlogPost> {
+    blog_post
+}
+
 #[launch]
 fn rocket() -> _ {
     let rocket = rocket::build();
     rocket.mount("/", routes![index]).mount(
         "/blog-posts",
-        routes![get_random_blog_post, get_all_blog_posts, get_blog_post],
+        routes![
+            get_random_blog_post,
+            get_all_blog_posts,
+            get_blog_post,
+            create_blog_post
+        ],
     )
 }
